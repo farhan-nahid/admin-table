@@ -4,7 +4,7 @@ import useApi from '../../hooks/useApi';
 import SingleCard from '../SingleCard/SingleCard';
 
 const AllBlogs = () => {
-  const { blogs, handelBloggerId } = useApi();
+  const { blogs } = useApi();
 
   return (
     <Container id='all__blogs' sx={{ mt: 8 }}>
