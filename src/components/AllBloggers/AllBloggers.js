@@ -6,12 +6,42 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import React from 'react';
-import useApi from '../../hooks/useApi';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import './AllBloggers.css';
 
 const AllBloggers = () => {
-  const { bloggers } = useApi();
+  const [bloggers, setBloggers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('https://gorest.co.in/public/v1/users', {
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/json',
+          Authorization: `Bearer 04b5143bdd646d3dc1c228f9ca6818abb82e3e902dfd2c0d7d55c1214bee6299`,
+        },
+      })
+      .then((res) => setBloggers(res.data.data))
+      .catch((err) => toast.error(err.message));
+  }, []);
+
+  const handelDelete = (id) => {
+    axios
+      .delete(`https://gorest.co.in/public/v1/users/${id}`, {
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/json',
+          Authorization: `Bearer 04b5143bdd646d3dc1c228f9ca6818abb82e3e902dfd2c0d7d55c1214bee6299`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 204) {
+          bloggers.filter((blogger) => blogger.id !== id);
+        }
+      });
+  };
 
   return (
     <Container id='all__bloggers'>
@@ -24,6 +54,7 @@ const AllBloggers = () => {
               <TableCell align='center'>EMAIL</TableCell>
               <TableCell align='center'>GENDER</TableCell>
               <TableCell align='center'>STATUS</TableCell>
+              <TableCell align='center'>DELETE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -33,6 +64,9 @@ const AllBloggers = () => {
                 <TableCell align='center'>{row.email}</TableCell>
                 <TableCell align='center'>{row.gender}</TableCell>
                 <TableCell align='center'>{row.status}</TableCell>
+                <TableCell align='center' onClick={() => handelDelete(row.id)}>
+                  Delete
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

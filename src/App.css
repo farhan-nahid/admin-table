@@ -57,3 +57,7 @@ a {
   margin: 20px 0;
   font-size: 17px;
 }
+
+.blog__comment {
+  margin-top: 50px;
+}
