@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import AddBlogger from './components/AddBlogger/AddBlogger';
 import AllBloggers from './components/AllBloggers/AllBloggers';
+import AllBlogs from './components/AllBlogs/AllBlogs';
+import BlogDetails from './components/BlogDetails/BlogDetails';
 import Navigation from './components/Navigation/Navigation';
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
       <Routes>
         <Route path='/add-bloggers' element={<AddBlogger />} />
         <Route path='/all-bloggers' element={<AllBloggers />} />
+        <Route path='/all-blogs' element={<AllBlogs />} />
+        <Route path='/blog/:id' element={<BlogDetails />} />
       </Routes>
     </BrowserRouter>
   );

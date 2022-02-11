@@ -6,28 +6,13 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import React from 'react';
+import useApi from '../../hooks/useApi';
 import './AllBloggers.css';
 
 const AllBloggers = () => {
-  const [bloggers, setBloggers] = useState([]);
+  const { bloggers } = useApi();
 
-  useEffect(() => {
-    axios
-      .get('https://gorest.co.in/public/v1/users', {
-        headers: {
-          Accept: 'application/json',
-          'content-type': 'application/json',
-          Authorization: `Bearer 04b5143bdd646d3dc1c228f9ca6818abb82e3e902dfd2c0d7d55c1214bee6299`,
-        },
-      })
-      .then((res) => setBloggers(res.data.data))
-      .catch((err) => toast.error(err.message));
-  }, []);
-
-  console.log(bloggers);
   return (
     <Container id='all__bloggers'>
       <h1>All Bloggers</h1>
