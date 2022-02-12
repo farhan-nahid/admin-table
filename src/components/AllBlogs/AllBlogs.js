@@ -12,10 +12,9 @@ const AllBlogs = () => {
         <>
           <h1>All Blogs</h1>
           <Grid container sx={{ mt: 4 }} spacing={4}>
-            {blogs.map((blog) => {
-              //   handelBloggerId(blog.user_id);
-              return <SingleCard key={blog.id} blog={blog} />;
-            })}
+            {blogs.map((blog) => (
+              <SingleCard key={blog.id} blog={blog} />
+            ))}
           </Grid>
         </>
       ) : (

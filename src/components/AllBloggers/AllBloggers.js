@@ -1,3 +1,5 @@
+import AutoDeleteOutlinedIcon from '@mui/icons-material/AutoDeleteOutlined';
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { Container } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -9,7 +11,6 @@ import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import './AllBloggers.css';
 
 const AllBloggers = () => {
   const [bloggers, setBloggers] = useState([]);
@@ -38,15 +39,16 @@ const AllBloggers = () => {
       })
       .then((res) => {
         if (res.status === 204) {
-          bloggers.filter((blogger) => blogger.id !== id);
+          const rest = bloggers.filter((blogger) => blogger.id !== id);
+          setBloggers(rest);
         }
       });
   };
 
   return (
-    <Container id='all__bloggers'>
+    <Container id='all__bloggers' sx={{ mt: 8 }}>
       <h1>All Bloggers</h1>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ mt: 4 }}>
         <Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
           <TableHead>
             <TableRow>
@@ -54,6 +56,7 @@ const AllBloggers = () => {
               <TableCell align='center'>EMAIL</TableCell>
               <TableCell align='center'>GENDER</TableCell>
               <TableCell align='center'>STATUS</TableCell>
+              <TableCell align='center'>EDIT</TableCell>
               <TableCell align='center'>DELETE</TableCell>
             </TableRow>
           </TableHead>
@@ -64,8 +67,11 @@ const AllBloggers = () => {
                 <TableCell align='center'>{row.email}</TableCell>
                 <TableCell align='center'>{row.gender}</TableCell>
                 <TableCell align='center'>{row.status}</TableCell>
-                <TableCell align='center' onClick={() => handelDelete(row.id)}>
-                  Delete
+                <TableCell align='center' style={{ color: 'green', cursor: 'pointer' }}>
+                  <ModeEditOutlinedIcon />
+                </TableCell>
+                <TableCell align='center' onClick={() => handelDelete(row.id)} style={{ color: 'red', cursor: 'pointer' }}>
+                  <AutoDeleteOutlinedIcon />
                 </TableCell>
               </TableRow>
             ))}

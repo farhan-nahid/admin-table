@@ -8,8 +8,8 @@ const useAsyncCall = () => {
   const [bloggers, setBloggers] = useState([]);
   const [blogger, setBlogger] = useState([]);
   const [comments, setComments] = useState([]);
-  const [bloggerId, setBloggerId] = useState(0);
-  const [blogId, setBlogId] = useState(0);
+  const [bloggerId, setBloggerId] = useState('4421');
+  const [blogId, setBlogId] = useState('1964');
 
   const handelBloggerId = (id) => {
     setBloggerId(id);
@@ -17,6 +17,42 @@ const useAsyncCall = () => {
 
   const handelBlogId = (id) => {
     setBlogId(id);
+  };
+
+  const handelAddUser = (e, data) => {
+    axios
+      .post('https://gorest.co.in/public/v1/users', data, {
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/json',
+          Authorization: `Bearer 04b5143bdd646d3dc1c228f9ca6818abb82e3e902dfd2c0d7d55c1214bee6299`,
+        },
+      })
+      .then((res) => {
+        if (res.data.data) {
+          toast.success('New User Added');
+          e.target.reset();
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
+  const handelAddBlog = (e, data) => {
+    axios
+      .post(`https://gorest.co.in/public/v1/users/${data.user_id}/posts`, data, {
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/json',
+          Authorization: `Bearer 04b5143bdd646d3dc1c228f9ca6818abb82e3e902dfd2c0d7d55c1214bee6299`,
+        },
+      })
+      .then((res) => {
+        if (res.data.data) {
+          toast.success('New Blog Added');
+          e.target.reset();
+        }
+      })
+      .catch((err) => toast.error(err.message));
   };
 
   const handelComment = (e, data) => {
@@ -42,7 +78,8 @@ const useAsyncCall = () => {
       })
       .then((res) => {
         if (res.status === 204) {
-          console.log(bloggers.filter((blogger) => blogger.id !== id));
+          const rest = bloggers.filter((blogger) => blogger.id !== id);
+          setBloggers(rest);
         }
       });
   };
@@ -112,7 +149,7 @@ const useAsyncCall = () => {
       .catch((err) => toast.error(err.message));
   }, [blogId]);
 
-  return { blogs, blog, bloggers, blogger, comments, handelBloggerId, handelBlogId, handelComment, handelDelete };
+  return { blogs, blog, bloggers, blogger, comments, handelBloggerId, handelBlogId, handelComment, handelDelete, handelAddUser, handelAddBlog };
 };
 
 export default useAsyncCall;

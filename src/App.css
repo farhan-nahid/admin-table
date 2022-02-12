@@ -37,6 +37,11 @@ a {
   margin-bottom: 20px;
 }
 
+.blog__card p {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
 .all__comments {
   margin-top: 50px;
 }
@@ -60,4 +65,12 @@ a {
 
 .blog__comment {
   margin-top: 50px;
+}
+
+#add__blogger form,
+#add__blog form {
+  padding: 50px;
+  margin-top: 50px;
+  background-color: #edf3f8;
+  border-radius: 10px;
 }

@@ -1,7 +1,7 @@
+import { Button, Container, FormControl, TextField } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import useApi from '../../hooks/useApi';
-import { Container, TextField, FormControl, Button } from '@mui/material';
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -31,7 +31,7 @@ const BlogDetails = () => {
 
       <form className='blog__comment' onSubmit={handelSubmit}>
         <FormControl fullWidth>
-          <TextField placeholder='Enter Your Comments' name='body' multiline rows={4} cols={12} maxRows={6} />
+          <TextField placeholder='Enter Your Comments' name='body' multiline rows={4} cols={12} maxRows={6} required />
         </FormControl>
         <Button variant='outlined' type='submit' style={{ marginTop: '20px' }}>
           Add Comments
