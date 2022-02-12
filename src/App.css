@@ -68,9 +68,14 @@ a {
 }
 
 #add__blogger form,
+#edit__blogger form,
 #add__blog form {
   padding: 50px;
   margin-top: 50px;
   background-color: #edf3f8;
   border-radius: 10px;
+}
+
+#all__bloggers table tbody tr td {
+  padding: 15px 16px !important;
 }

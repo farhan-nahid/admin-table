@@ -8,7 +8,7 @@ const useAsyncCall = () => {
   const [bloggers, setBloggers] = useState([]);
   const [blogger, setBlogger] = useState([]);
   const [comments, setComments] = useState([]);
-  const [bloggerId, setBloggerId] = useState('4421');
+  const [bloggerId, setBloggerId] = useState('3909');
   const [blogId, setBlogId] = useState('1964');
 
   const handelBloggerId = (id) => {
@@ -84,6 +84,22 @@ const useAsyncCall = () => {
       });
   };
 
+  const handelUpdateUser = (data, id) => {
+    axios
+      .put(`https://gorest.co.in/public/v1/users/${id}`, data, {
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/json',
+          Authorization: `Bearer 04b5143bdd646d3dc1c228f9ca6818abb82e3e902dfd2c0d7d55c1214bee6299`,
+        },
+      })
+      .then((res) => {
+        if (res) {
+          toast.success('Blogger Updated Successfully');
+        }
+      });
+  };
+
   useEffect(() => {
     axios
       .get('https://gorest.co.in/public/v1/users', {
@@ -149,7 +165,20 @@ const useAsyncCall = () => {
       .catch((err) => toast.error(err.message));
   }, [blogId]);
 
-  return { blogs, blog, bloggers, blogger, comments, handelBloggerId, handelBlogId, handelComment, handelDelete, handelAddUser, handelAddBlog };
+  return {
+    blogs,
+    blog,
+    bloggers,
+    blogger,
+    comments,
+    handelBloggerId,
+    handelBlogId,
+    handelComment,
+    handelDelete,
+    handelAddUser,
+    handelAddBlog,
+    handelUpdateUser,
+  };
 };
 
 export default useAsyncCall;

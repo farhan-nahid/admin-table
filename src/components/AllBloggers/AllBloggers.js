@@ -8,42 +8,13 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import useApi from '../../hooks/useApi';
 
 const AllBloggers = () => {
-  const [bloggers, setBloggers] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get('https://gorest.co.in/public/v1/users', {
-        headers: {
-          Accept: 'application/json',
-          'content-type': 'application/json',
-          Authorization: `Bearer 04b5143bdd646d3dc1c228f9ca6818abb82e3e902dfd2c0d7d55c1214bee6299`,
-        },
-      })
-      .then((res) => setBloggers(res.data.data))
-      .catch((err) => toast.error(err.message));
-  }, []);
-
-  const handelDelete = (id) => {
-    axios
-      .delete(`https://gorest.co.in/public/v1/users/${id}`, {
-        headers: {
-          Accept: 'application/json',
-          'content-type': 'application/json',
-          Authorization: `Bearer 04b5143bdd646d3dc1c228f9ca6818abb82e3e902dfd2c0d7d55c1214bee6299`,
-        },
-      })
-      .then((res) => {
-        if (res.status === 204) {
-          const rest = bloggers.filter((blogger) => blogger.id !== id);
-          setBloggers(rest);
-        }
-      });
-  };
+  const { handelDelete, bloggers } = useApi();
+const navigate = useNavigate()
 
   return (
     <Container id='all__bloggers' sx={{ mt: 8 }}>
@@ -67,7 +38,7 @@ const AllBloggers = () => {
                 <TableCell align='center'>{row.email}</TableCell>
                 <TableCell align='center'>{row.gender}</TableCell>
                 <TableCell align='center'>{row.status}</TableCell>
-                <TableCell align='center' style={{ color: 'green', cursor: 'pointer' }}>
+                <TableCell align='center' onClick={()=>navigate(`/edit-blogger/${row.id}`)} style={{ color: 'green', cursor: 'pointer' }}>
                   <ModeEditOutlinedIcon />
                 </TableCell>
                 <TableCell align='center' onClick={() => handelDelete(row.id)} style={{ color: 'red', cursor: 'pointer' }}>
